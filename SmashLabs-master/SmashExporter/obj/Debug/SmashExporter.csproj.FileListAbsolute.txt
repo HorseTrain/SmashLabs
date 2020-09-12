@@ -1,0 +1,13 @@
+C:\Users\Raymond\Desktop\Git\SmashLabs\SmashLabs-master\SmashExporter\bin\Debug\SmashExporter.exe.config
+C:\Users\Raymond\Desktop\Git\SmashLabs\SmashLabs-master\SmashExporter\bin\Debug\SmashExporter.exe
+C:\Users\Raymond\Desktop\Git\SmashLabs\SmashLabs-master\SmashExporter\bin\Debug\SmashExporter.pdb
+C:\Users\Raymond\Desktop\Git\SmashLabs\SmashLabs-master\SmashExporter\obj\Debug\SmashExporter.csprojAssemblyReference.cache
+C:\Users\Raymond\Desktop\Git\SmashLabs\SmashLabs-master\SmashExporter\obj\Debug\SmashExporter.csproj.CoreCompileInputs.cache
+C:\Users\Raymond\Desktop\Git\SmashLabs\SmashLabs-master\SmashExporter\obj\Debug\SmashExporter.exe
+C:\Users\Raymond\Desktop\Git\SmashLabs\SmashLabs-master\SmashExporter\obj\Debug\SmashExporter.pdb
+C:\Users\Raymond\Desktop\Git\SmashLabs\SmashLabs-master\SmashExporter\bin\Debug\SmashLabs.dll
+C:\Users\Raymond\Desktop\Git\SmashLabs\SmashLabs-master\SmashExporter\bin\Debug\SmashLabs.pdb
+C:\Users\Raymond\Desktop\Git\SmashLabs\SmashLabs-master\SmashExporter\obj\Debug\SmashExporter.csproj.CopyComplete
+C:\Users\Raymond\Desktop\Git\SmashLabs\SmashLabs-master\SmashExporter\bin\Debug\OpenTK.dll
+C:\Users\Raymond\Desktop\Git\SmashLabs\SmashLabs-master\SmashExporter\bin\Debug\OpenTK.pdb
+C:\Users\Raymond\Desktop\Git\SmashLabs\SmashLabs-master\SmashExporter\bin\Debug\OpenTK.xml

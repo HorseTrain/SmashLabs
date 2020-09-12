@@ -11,6 +11,7 @@ namespace SmashLabs.IO.Parsables.Skeleton
     public class LEKS : IParsable
     {
         public BoneEntry[] BoneEntries { get; set; }
+        public Dictionary<string,int> BoneDic { get; set; }
 
         public override void LoadData()
         {
@@ -22,14 +23,19 @@ namespace SmashLabs.IO.Parsables.Skeleton
 
             reader.Seek(EntryDataLocation);
 
+            BoneDic = new Dictionary<string, int>();
+
             for (int i = 0; i < BoneEntries.Length; i++)
             {
                 BoneEntries[i] = new BoneEntry()
                 {
                     Name = reader.ReadStringOffset(),
-                    Index = reader.ReadInt(),
+                    Index = reader.ReadShort(),
+                    ParentIndex = reader.ReadShort(),
                     Type = reader.ReadInt()
                 };
+
+                BoneDic.Add(BoneEntries[i].Name,BoneEntries[i].Index);
             }
 
             reader.Seek(MatrixDataLocation);

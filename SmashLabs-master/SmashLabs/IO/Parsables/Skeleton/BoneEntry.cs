@@ -10,7 +10,8 @@ namespace SmashLabs.IO.Parsables.Skeleton
     public class BoneEntry
     {
         public string Name { get; set; }
-        public int Index { get; set; }
+        public short Index { get; set; }
+        public short ParentIndex { get; set; }
         public int Type { get; set; }
         public Matrix4 WorldTransform { get; set; }
         public Matrix4 InverseWorldTransform { get; set; }

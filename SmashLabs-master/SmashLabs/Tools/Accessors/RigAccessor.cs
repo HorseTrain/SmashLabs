@@ -24,7 +24,17 @@ namespace SmashLabs.Tools.Accessors
 
             if (inf.Length == 0)
             {
-                return null;
+                VertexRig[] Out = new VertexRig[Object.MeshData.VertexCount];
+
+                int index = SkeletonDic[Object.ParentBoneName];
+
+                for (int i = 0; i < Out.Length;i++)
+                {
+                    Out[i].VertexWeight = new Vector4(1);
+                    Out[i].VertexWeightIndex = new Vector4I(index);
+                }
+
+                return Out;
             }
             else
             {

@@ -10,7 +10,7 @@ namespace SmashLabs.Structs
     {
         public int X, Y, Z, W;
 
-        public Vector4I(int X, int Y, int Z, int W)
+        public Vector4I(int X = 0, int Y = 0, int Z = 0, int W = 0)
         {
             this.X = X;
             this.Y = Y;
