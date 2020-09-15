@@ -7,14 +7,9 @@ using SmashLabs.IO.Parsables.Model;
 using SmashLabs.IO.Parsables.Skeleton;
 using SmashLabs.Structs;
 using SmashLabs.Tools.Accessors;
-using System;
+using System.Drawing;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Reflection.Emit;
-using System.Runtime.Remoting.Contexts;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 
 namespace SmashExporter
 {
@@ -49,6 +44,13 @@ namespace SmashExporter
         public int DataOffset;
     }
 
+    public struct TexturePointer
+    {
+        public int NameOffset;
+        public int TextureOffset;
+        public int TextureSize;
+    }
+
     public partial class Exporters
     {
         public unsafe static CrossFile GetModelFile(string path)
@@ -65,6 +67,7 @@ namespace SmashExporter
             Out.Buffers.Add(ParseMeshCollection(mesh,skeleton,model));
             Out.Buffers.Add(ParseSkeletonFile(skeleton));
             Out.Buffers.Add(ParseMaterialFile(material));
+            Out.Buffers.Add(ParseTextureCollection(path));
 
             return Out;
         }
@@ -107,7 +110,21 @@ namespace SmashExporter
                     CrossFile.AddArrayToObject(vertexAccesor.ReadIndiciesShort(Object),ref MeshBuffer);
 
                     Out.VertexBufferOffset = MeshBuffer.Count;
-                    CrossFile.AddArrayToObject(ExtendedSmashVertex.ReadFullVerticies(vertexAccesor,rigAccessor,skeleton,Object),ref MeshBuffer);
+
+                    bool Rigged = false;
+
+                    ExtendedSmashVertex[] verttemp = ExtendedSmashVertex.ReadFullVerticies(vertexAccesor, rigAccessor, skeleton, Object,out Rigged);
+
+                    if (!Rigged)
+                    {
+                        for (int v = 0; v < verttemp.Length; v++)
+                        {
+                            verttemp[v].VertexData.VertexPosition = TransformPoint(skeleton.BoneEntries[verttemp[v].RigData.VertexWeightIndex.X].WorldTransform,verttemp[v].VertexData.VertexPosition);
+                            verttemp[v].VertexData.VertexNormal = TransformNormal(skeleton.BoneEntries[verttemp[v].RigData.VertexWeightIndex.X].WorldTransform, verttemp[v].VertexData.VertexNormal);
+                        }
+                    }
+
+                    CrossFile.AddArrayToObject(verttemp,ref MeshBuffer);
                 }
 
                 CrossFile.AddObjectToBuffer(Out,ref PointerBuffer);
@@ -127,6 +144,7 @@ namespace SmashExporter
             List<byte> PointerBuffer = temp.AddBuffer();
             List<byte> StringBuffer = temp.AddBuffer();
             List<byte> MatrixBuffer = temp.AddBuffer();
+            List<byte> InverseMatrixBuffer = temp.AddBuffer();
 
             CrossFile.AddObjectToBuffer((short)file.BoneEntries.Length,ref PointerBuffer);
 
@@ -141,6 +159,7 @@ namespace SmashExporter
                 CrossFile.AddStringToBuffer(entry.Name,ref StringBuffer);
 
                 CrossFile.AddObjectToBuffer(entry.LocalTransform, ref MatrixBuffer);
+                CrossFile.AddObjectToBuffer(entry.InverseWorldTransform, ref InverseMatrixBuffer);
 
                 CrossFile.AddObjectToBuffer(Out,ref PointerBuffer);
             }
@@ -162,7 +181,7 @@ namespace SmashExporter
             List<byte> MaterialAttributeData = temp.AddBuffer();
             List<byte> MaterialData = temp.AddBuffer();
 
-            EntryBuffer.Add((byte)EntryBuffer.Count);
+            EntryBuffer.Add((byte)file.Entries.Length);
 
             foreach (MaterialEntry entry in file.Entries)
             {
@@ -192,7 +211,7 @@ namespace SmashExporter
                             CrossFile.AddObjectToBuffer((float)attr.DataObject,ref MaterialData);
                             break;
                         case ParamDataType.Boolean:
-                            CrossFile.AddObjectToBuffer((bool)attr.DataObject, ref MaterialData); ;
+                            CrossFile.AddObjectToBuffer((bool)attr.DataObject, ref MaterialData);
                             break;
                         case ParamDataType.Vector4:
                             CrossFile.AddObjectToBuffer((Vector4)attr.DataObject, ref MaterialData);
@@ -223,6 +242,73 @@ namespace SmashExporter
             temp.BuildFile();
 
             return temp.FinalBuffer;
+        }
+
+        static List<byte> ParseTextureCollection(string path)
+        {
+            CrossFile Out = new CrossFile();
+
+            Out.Magic = "TEXTPAK";
+
+            List<byte> PointerBuffer = Out.AddBuffer();
+            List<byte> StringBuffer = Out.AddBuffer();
+            List<byte> TextureBuffer = Out.AddBuffer();
+
+            string[] files = Directory.GetFiles(path);
+
+            int count = 0;
+
+            foreach (string file in files)
+            {
+                if (file.EndsWith(".nutexb"))
+                {
+                    count++;
+
+                    TexturePointer pointer = new TexturePointer();
+
+                    pointer.NameOffset = StringBuffer.Count;
+                    CrossFile.AddStringToBuffer(Path.GetFileName(file).Split('.')[0],ref StringBuffer);
+
+                    pointer.TextureOffset = TextureBuffer.Count;
+
+                    Bitmap temp = NUTEXTB.TextureLoader.LoadNUTEXTB(file);
+
+                    temp.Save("temp.png");
+                    byte[] dat = File.ReadAllBytes("temp.png");
+                    pointer.TextureSize = dat.Length;
+                    CrossFile.AddArrayToObject(dat,ref TextureBuffer);
+                  
+                    CrossFile.AddObjectToBuffer(pointer,ref PointerBuffer);
+                }
+            }
+
+            PointerBuffer.Insert(0,(byte)count);
+
+            Out.BuildFile();
+
+            return Out.FinalBuffer;
+        }
+
+        public static Vector3 TransformPoint(Matrix4 mat,Vector3 vec)
+        {
+            OpenTK.Vector3 temp = OpenTK.Vector3.TransformPosition(new OpenTK.Vector3(vec.X, vec.Y, vec.Z), ConvertMatrix(mat));
+
+            return new Vector3(temp.X,temp.Y,temp.Z);
+        }
+
+        public static Vector3 TransformNormal(Matrix4 mat, Vector3 vec)
+        {
+            OpenTK.Vector3 temp = OpenTK.Vector3.TransformNormal(new OpenTK.Vector3(vec.X, vec.Y, vec.Z), ConvertMatrix(mat));
+
+            return new Vector3(temp.X, temp.Y, temp.Z);
+        }
+
+
+        public static unsafe OpenTK.Matrix4 ConvertMatrix(Matrix4 mat)
+        {
+            OpenTK.Matrix4* temp = (OpenTK.Matrix4*)&mat;
+
+            return *temp;
         }
     }
 }

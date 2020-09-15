@@ -18,12 +18,14 @@ namespace SmashLabs.Tools.Accessors
             this.file = file;
         }
 
-        public VertexRig[] ReadVertexWeightData(MeshObject Object,Dictionary<string,int> SkeletonDic)
+        public VertexRig[] ReadVertexWeightData(MeshObject Object, Dictionary<string, int> SkeletonDic, out bool Rigged)
         {
             SBInfluence[] inf = ReadRigBuffer(Object.Name,(int)Object.SubIndex);
 
             if (inf.Length == 0)
             {
+                Rigged = false;
+
                 VertexRig[] Out = new VertexRig[Object.MeshData.VertexCount];
 
                 int index = SkeletonDic[Object.ParentBoneName];
@@ -38,6 +40,8 @@ namespace SmashLabs.Tools.Accessors
             }
             else
             {
+                Rigged = true;
+
                 VertexRig[] Out = new VertexRig[Object.MeshData.VertexCount];
 
                 foreach (SBInfluence i in inf)

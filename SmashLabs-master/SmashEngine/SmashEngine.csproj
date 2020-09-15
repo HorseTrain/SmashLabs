@@ -14,7 +14,7 @@
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -39,6 +39,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,6 +48,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Graphics\Animation\Animator.cs" />
+    <Compile Include="Graphics\Animation\TransformKey.cs" />
+    <Compile Include="Graphics\MaterialAttributes\BlendState.cs" />
+    <Compile Include="Graphics\MaterialAttributes\CullMode.cs" />
+    <Compile Include="Graphics\MaterialAttributes\FillMode.cs" />
+    <Compile Include="Graphics\MaterialAttributes\RasterizerState.cs" />
+    <Compile Include="Graphics\MaterialAttributes\Sampler.cs" />
+    <Compile Include="Graphics\MaterialAttributes\UVTransform.cs" />
+    <Compile Include="Graphics\MaterialAttributes\WrapMode.cs" />
+    <Compile Include="IO\CrossFile.cs" />
+    <Compile Include="IO\Loaders\AnimationLoader.cs" />
+    <Compile Include="IO\Loaders\MaterialLoader.cs" />
+    <Compile Include="IO\Loaders\RenderModelLoader.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -59,6 +73,14 @@
     <ProjectReference Include="..\GenericRenderer\GenericRenderer.csproj">
       <Project>{ff820dda-a813-4e13-92ec-c16f4b4926a9}</Project>
       <Name>GenericRenderer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SmashExporter\SmashExporter.csproj">
+      <Project>{be4a3db7-c5d9-41a8-bc30-2753a003bbf9}</Project>
+      <Name>SmashExporter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SmashLabs\SmashLabs.csproj">
+      <Project>{35664f18-b90d-46ee-989c-1e0e1824b314}</Project>
+      <Name>SmashLabs</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

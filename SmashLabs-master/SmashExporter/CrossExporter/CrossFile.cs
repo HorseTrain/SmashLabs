@@ -4,14 +4,15 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.InteropServices;
 
 namespace SmashExporter.CrossExporter
 {
     public struct FileHeader
     {
         public long FileMagic;
-        public long Unk0;
-        public short FileCount;
+        public int Unk0;
+        public int FileCount;
     }
     public struct BufferHeader
     {
@@ -21,8 +22,8 @@ namespace SmashExporter.CrossExporter
     public unsafe class CrossFile
     {
         public string Magic = "";
-        public string Unk0 = "";
-        public FileHeader header => new FileHeader() { FileMagic = FromString(Magic),Unk0 = FromString(Unk0),FileCount = (short)Buffers.Count };
+        public int Unk0 = 0;
+        public FileHeader header => new FileHeader() { FileMagic = FromString(Magic),Unk0 = Unk0,FileCount = Buffers.Count };
         public List<byte> FinalBuffer = new List<byte>();
 
         public List<List<byte>> Buffers = new List<List<byte>>(); 
@@ -86,7 +87,7 @@ namespace SmashExporter.CrossExporter
 
             foreach (List<byte> buffers in Buffers)
             {
-                AddObjectToBuffer((long)(buffers.Count + 8), ref FinalBuffer);
+                AddObjectToBuffer((long)(buffers.Count), ref FinalBuffer);
 
                 foreach (byte b in buffers)
                 {

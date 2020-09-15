@@ -57,7 +57,7 @@ namespace SmashLabs.Tools.Accessors
                     {
                         case "Position0": Out[i].VertexPosition = new Vector3(Data[i].X, Data[i].Y, Data[i].Z); break;
                         case "Normal0": Out[i].VertexNormal = new Vector3(Data[i].X, Data[i].Y, Data[i].Z); break;
-                        case "map1": if (map == 0) Out[i].VertexMap0 = new Vector2(Data[i].X, Data[i].Y); else Out[i].VertexMap1 = new Vector2(Data[i].X, Data[i].Y); break;
+                        case "map1": if (map == 0) Out[i].VertexMap0 = new Vector2(Data[i].X, 1-Data[i].Y); else Out[i].VertexMap1 = new Vector2(Data[i].X, Data[i].Y); break;
                         case "colorSet1": Out[i].VertexColor = new Vector4(Data[i].X/128.0f, Data[i].Y / 128.0f, Data[i].Z / 128.0f, Data[i].W / 128.0f); break; //Deviding by 128 is not important.
                     }
                 }

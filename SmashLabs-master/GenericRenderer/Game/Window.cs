@@ -1,5 +1,6 @@
 ﻿using OpenTK.Graphics.OpenGL;
 using OpenTK;
+using System;
 
 namespace GenericRenderer.Game
 {
@@ -24,6 +25,10 @@ namespace GenericRenderer.Game
 
                 Active = true;
 
+                GL.Enable(EnableCap.DepthTest);
+
+                Globals.SetUp();
+
                 glWindow.Run();
 
                 Active = false;
@@ -39,7 +44,7 @@ namespace GenericRenderer.Game
 
         public void PreWindow()
         {
-            GL.Clear(ClearBufferMask.ColorBufferBit);
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);;
             GL.ClearColor(0.2f,0.2f,0.2f,1);
 
             GL.Viewport(0,0,Width,Height);

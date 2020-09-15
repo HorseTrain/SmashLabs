@@ -3,23 +3,41 @@ using SmashLabs.IO.Parsables.Animation.Enums;
 using SmashLabs.Structs;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.InteropServices;
 
 namespace SmashLabs.Tools.Accessors.Animation
 {
     //Thank you ploaj :)
     public class AnimationTrackAccessor
     {
-        public MINA file;
+        public MINA animationfile;
 
         BufferReader parser;
 
         public AnimationTrackAccessor(MINA file)
         {
-            this.file = file;
-            parser = new BufferReader(file.AnimationDataBuffer);
+            animationfile = file;
+
+            parser = new BufferReader(animationfile.AnimationDataBuffer);
+        }
+
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        private struct SsbhAnimCompressedHeader
+        {
+            public ushort Unk_4; // always 4?
+            public ushort Flags;
+            public ushort DefaultDataOffset;
+            public ushort BitsPerEntry;
+            public int CompressedDataOffset;
+            public int FrameCount;
+        }
+
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        private struct SbhAnimCompressedItem
+        {
+            public float Start;
+            public float End;
+            public ulong Count;
         }
 
         public bool CheckFlag(uint flags, uint mask, AnimTrackFlags expectedValue)

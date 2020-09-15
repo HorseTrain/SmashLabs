@@ -22,6 +22,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -37,6 +38,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,8 +47,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Enums\ParamDataType.cs" />
+    <Compile Include="Assets\Enums\ParamID.cs" />
+    <Compile Include="Assets\RenderAnimation.cs" />
+    <Compile Include="Assets\RenderCamera.cs" />
+    <Compile Include="Assets\RenderMaterial.cs" />
     <Compile Include="Assets\RenderMesh.cs" />
+    <Compile Include="Assets\RenderModel.cs" />
+    <Compile Include="Assets\RenderShader.cs" />
+    <Compile Include="Assets\RenderSkeleton.cs" />
+    <Compile Include="Assets\RenderTexture.cs" />
+    <Compile Include="Assets\UniformBuffer.cs" />
     <Compile Include="Game\Window.cs" />
+    <Compile Include="Globals.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Structs\Vector4I.cs" />
     <Compile Include="Structs\RenderVertex.cs" />
