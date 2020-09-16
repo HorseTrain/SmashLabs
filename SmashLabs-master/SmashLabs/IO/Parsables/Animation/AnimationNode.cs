@@ -12,7 +12,7 @@ namespace SmashLabs.IO.Parsables.Animation
     {
         public string Name { get; set; }
         public AnimationTrack[] Tracks { get; set; }
-        public static AnimationNode[] ParseAnimationGroups(BufferReader reader)
+        public static AnimationNode[] ParseAnimationNodes(BufferReader reader)
         {
             BufferArrayPointer pointer = reader.ReadArrayPointer();
 

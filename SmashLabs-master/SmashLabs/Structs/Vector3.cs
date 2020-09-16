@@ -19,7 +19,7 @@ namespace SmashLabs.Structs
 
         public override string ToString()
         {
-            return "(" + X + "," + Y + "," + Z + ")";
+            return "(" + X + ", " + Y + ", " + Z + ")";
         }
     }
 }

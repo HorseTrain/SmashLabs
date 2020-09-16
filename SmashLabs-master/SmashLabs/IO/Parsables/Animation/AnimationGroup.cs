@@ -36,7 +36,7 @@ namespace SmashLabs.IO.Parsables.Animation
 
             Out.AnimationType = reader.ReadObject<AnimType>();
 
-            Out.Nodes = AnimationNode.ParseAnimationGroups(reader);
+            Out.Nodes = AnimationNode.ParseAnimationNodes(reader);
 
             return Out;
         }

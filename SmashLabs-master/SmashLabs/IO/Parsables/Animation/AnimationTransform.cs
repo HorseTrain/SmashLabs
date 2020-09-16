@@ -10,7 +10,7 @@ namespace SmashLabs.IO.Parsables.Animation
     public struct AnimationTransform
     {
         public Vector3 Scale;
-        public Vector4 Rotation; //Quaternion
+        public Vector4 Rotation;//Quaternion
         public Vector3 Position;
         public float CompensateScale;
 

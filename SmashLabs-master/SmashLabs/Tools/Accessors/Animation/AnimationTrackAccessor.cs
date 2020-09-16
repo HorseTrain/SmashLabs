@@ -325,6 +325,7 @@ namespace SmashLabs.Tools.Accessors.Animation
                         transform.Rotation.W = -transform.Rotation.W;
                 }
 
+
                 transforms[frame] = transform;
             }
 

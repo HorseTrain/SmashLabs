@@ -21,3 +21,4 @@ C:\Users\Raymond\Desktop\SmashLabs\SmashLabs-master\SmashLabs\bin\Debug\SmashLab
 C:\Users\Raymond\Desktop\SmashLabs\SmashLabs-master\SmashLabs\obj\Debug\SmashLabs.csproj.CoreCompileInputs.cache
 C:\Users\Raymond\Desktop\SmashLabs\SmashLabs-master\SmashLabs\obj\Debug\SmashLabs.dll
 C:\Users\Raymond\Desktop\SmashLabs\SmashLabs-master\SmashLabs\obj\Debug\SmashLabs.pdb
+C:\Users\Raymond\Desktop\SmashLabs\SmashLabs-master\SmashLabs\obj\Debug\SmashLabs.csprojAssemblyReference.cache
