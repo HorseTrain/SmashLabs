@@ -1,0 +1,13 @@
+C:\Users\Raymond\Desktop\SmashLabs\SmashLabs-master\Exporter\bin\Debug\Exporter.exe.config
+C:\Users\Raymond\Desktop\SmashLabs\SmashLabs-master\Exporter\bin\Debug\Exporter.exe
+C:\Users\Raymond\Desktop\SmashLabs\SmashLabs-master\Exporter\bin\Debug\Exporter.pdb
+C:\Users\Raymond\Desktop\SmashLabs\SmashLabs-master\Exporter\obj\Debug\Exporter.csprojAssemblyReference.cache
+C:\Users\Raymond\Desktop\SmashLabs\SmashLabs-master\Exporter\obj\Debug\Exporter.csproj.CoreCompileInputs.cache
+C:\Users\Raymond\Desktop\SmashLabs\SmashLabs-master\Exporter\obj\Debug\Exporter.exe
+C:\Users\Raymond\Desktop\SmashLabs\SmashLabs-master\Exporter\obj\Debug\Exporter.pdb
+C:\Users\Raymond\Desktop\SmashLabs\SmashLabs-master\Exporter\bin\Debug\SmashLabs.dll
+C:\Users\Raymond\Desktop\SmashLabs\SmashLabs-master\Exporter\bin\Debug\SmashLabs.pdb
+C:\Users\Raymond\Desktop\SmashLabs\SmashLabs-master\Exporter\obj\Debug\Exporter.csproj.CopyComplete
+C:\Users\Raymond\Desktop\SmashLabs\SmashLabs-master\Exporter\bin\Debug\OpenTK.dll
+C:\Users\Raymond\Desktop\SmashLabs\SmashLabs-master\Exporter\bin\Debug\OpenTK.pdb
+C:\Users\Raymond\Desktop\SmashLabs\SmashLabs-master\Exporter\bin\Debug\OpenTK.xml

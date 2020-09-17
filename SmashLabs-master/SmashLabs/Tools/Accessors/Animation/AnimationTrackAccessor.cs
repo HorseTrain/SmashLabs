@@ -12,13 +12,9 @@ namespace SmashLabs.Tools.Accessors.Animation
     {
         public MINA animationfile;
 
-        BufferReader parser;
-
         public AnimationTrackAccessor(MINA file)
         {
             animationfile = file;
-
-            parser = new BufferReader(animationfile.AnimationDataBuffer);
         }
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
@@ -48,6 +44,8 @@ namespace SmashLabs.Tools.Accessors.Animation
         public object[] ReadTrack(AnimationTrack track)
         {
             List<object> output = new List<object>();
+
+            BufferReader parser = new BufferReader(animationfile.AnimationDataBuffer);
 
             parser.Seek(track.DataOffset);
 

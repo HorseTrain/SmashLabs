@@ -8,8 +8,8 @@ namespace SmashLabs.Structs
 {
     public struct VertexRig
     {
-        public Vector4I VertexWeightIndex;
         public Vector4 VertexWeight;
+        public Vector4I VertexWeightIndex;
 
         public override string ToString()
         {
