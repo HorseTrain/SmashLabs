@@ -1,4 +1,6 @@
 ﻿using SmashLabs.Structs;
+using SmashLabs.Tools.Exporters;
+using SmashLabs.Tools.Exporters.Structs.Formats.LEKS;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,6 +54,70 @@ namespace SmashLabs.IO.Parsables.Skeleton
                 BoneEntries[i].LocalTransform = Transforms[i];
                 BoneEntries[i].InverseLocalTransform = InverseTransforms[i];
             }
+        }
+
+        public override unsafe byte[] GetData()
+        {
+            ExportableBuffer Exporter = new ExportableBuffer();
+
+            ByteBuffer HeaderData = Exporter.AddBuffer();
+            ByteBuffer PointerData = Exporter.AddBuffer();
+
+            ByteBuffer StringBuffer = Exporter.AddBuffer();
+
+            {
+                int pointersize = BoneEntries.Length * 16;
+
+                foreach (BoneEntry entry in BoneEntries)
+                {
+                    PointerData.AddObjectToArray((long)pointersize + StringBuffer.Count);
+                    StringBuffer.AddStringToBuffer(entry.Name);
+
+                    PointerData.AddObjectToArray(entry.Index);
+                    PointerData.AddObjectToArray(entry.ParentIndex);
+                    PointerData.AddObjectToArray(entry.Type);
+
+                    pointersize -= 16;
+                }
+            }
+
+            {
+                ByteBuffer WorldTransform = Exporter.AddBuffer();
+                ByteBuffer InverseWorldTransform = Exporter.AddBuffer();
+                ByteBuffer TransformBuffer = Exporter.AddBuffer();
+                ByteBuffer InverseTransformBuffer = Exporter.AddBuffer();
+
+                foreach (BoneEntry entry in BoneEntries)
+                {
+                    WorldTransform.AddObjectToArray(entry.WorldTransform);
+                    InverseWorldTransform.AddObjectToArray(entry.InverseWorldTransform);
+                    TransformBuffer.AddObjectToArray(entry.LocalTransform);
+                    InverseTransformBuffer.AddObjectToArray(entry.InverseLocalTransform);
+                }
+            }
+
+            {
+                HeaderData.AddObjectToArray(Header);
+                HeaderData.AddObjectToArray(Magic);
+
+                HeaderData.AddObjectToArray(80L);
+
+                HeaderData.AddObjectToArray((long)BoneEntries.Length);
+                HeaderData.AddObjectToArray((long)PointerData.Count + StringBuffer.Count + (104 - HeaderData.Count));
+
+                HeaderData.AddObjectToArray((long)BoneEntries.Length);
+                HeaderData.AddObjectToArray((long)PointerData.Count + StringBuffer.Count + (104 - HeaderData.Count) + (1 * (sizeof(Matrix4) * BoneEntries.Length)));
+
+                HeaderData.AddObjectToArray((long)BoneEntries.Length);
+                HeaderData.AddObjectToArray((long)PointerData.Count + StringBuffer.Count + (104 - HeaderData.Count) + (2 * (sizeof(Matrix4) * BoneEntries.Length)));
+
+                HeaderData.AddObjectToArray((long)BoneEntries.Length);
+                HeaderData.AddObjectToArray((long)PointerData.Count + StringBuffer.Count + (104 - HeaderData.Count) + (3 * (sizeof(Matrix4) * BoneEntries.Length)));
+
+                HeaderData.AddObjectToArray((long)BoneEntries.Length);
+            }
+
+            return Exporter.BuildFinalBuffer().ToArray();
         }
     }
 }

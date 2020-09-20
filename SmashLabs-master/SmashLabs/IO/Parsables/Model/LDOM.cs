@@ -63,26 +63,26 @@ namespace SmashLabs.IO.Parsables.Model
             ByteBuffer pointerbuffer = Exporter.AddBuffer();
             ByteBuffer StringBuffer = Exporter.AddBuffer();
 
-            LDOMExportableHeaderFile TempHeader = new LDOMExportableHeaderFile();
+            ExportableHeaderFile TempHeader = new ExportableHeaderFile();
 
             { //Header Data
                 TempHeader.Header = Header;
                 TempHeader.Magic = Magic;
 
-                TempHeader.NameOffset = sizeof(LDOMExportableHeaderFile) - (int)Marshal.OffsetOf(typeof(LDOMExportableHeaderFile), "NameOffset");
+                TempHeader.NameOffset = sizeof(ExportableHeaderFile) - (int)Marshal.OffsetOf(typeof(ExportableHeaderFile), "NameOffset");
                 headernames.AddStringToBuffer(Name);
 
-                TempHeader.SkeletonNameOffset = (sizeof(LDOMExportableHeaderFile) - (int)Marshal.OffsetOf(typeof(LDOMExportableHeaderFile), "SkeletonNameOffset")) + headernames.Count;
+                TempHeader.SkeletonNameOffset = (sizeof(ExportableHeaderFile) - (int)Marshal.OffsetOf(typeof(ExportableHeaderFile), "SkeletonNameOffset")) + headernames.Count;
                 headernames.AddStringToBuffer(SkeletonFileName);
 
                 TempHeader.UnknownFileNameOffset = 0;
 
-                TempHeader.MeshFileNameOffset = (sizeof(LDOMExportableHeaderFile) - (int)Marshal.OffsetOf(typeof(LDOMExportableHeaderFile), "MeshFileNameOffset")) + headernames.Count;
+                TempHeader.MeshFileNameOffset = (sizeof(ExportableHeaderFile) - (int)Marshal.OffsetOf(typeof(ExportableHeaderFile), "MeshFileNameOffset")) + headernames.Count;
                 headernames.AddStringToBuffer(MeshCollectionFileName);
             }
 
             { //Material Names
-                TempHeader.MaterialNamesPointer.Offset = (sizeof(LDOMExportableHeaderFile) + headernames.Count) - (int)Marshal.OffsetOf(typeof(LDOMExportableHeaderFile), "MaterialNamesPointer");
+                TempHeader.MaterialNamesPointer.Offset = (sizeof(ExportableHeaderFile) + headernames.Count) - (int)Marshal.OffsetOf(typeof(ExportableHeaderFile), "MaterialNamesPointer");
                 TempHeader.MaterialNamesPointer.ElementCount = MaterialFileNames.Length;
 
                 List<long> materialnameoffsets = new List<long>();
@@ -103,32 +103,32 @@ namespace SmashLabs.IO.Parsables.Model
                 }
             }
 
-            TempHeader.EntryPointers.ElementCount = Entries.Length;
-            TempHeader.EntryPointers.Offset = (sizeof(LDOMExportableHeaderFile) + headernames.Count + materialnamepointers.Count + materialnamebuffers.Count) - (int)Marshal.OffsetOf(typeof(LDOMExportableHeaderFile), "EntryPointers");
-
-            header.AddObjectToArray(TempHeader);
-
-            long pointersize = 24 * Entries.Length;
-            long stringoffset = pointersize;
-
-            for (int i = 0; i < Entries.Length; i++)
             {
-                ExportableModelEntry tempentry = new ExportableModelEntry();
+                TempHeader.EntryPointers.ElementCount = Entries.Length;
+                TempHeader.EntryPointers.Offset = (sizeof(ExportableHeaderFile) + headernames.Count + materialnamepointers.Count + materialnamebuffers.Count) - (int)Marshal.OffsetOf(typeof(ExportableHeaderFile), "EntryPointers");
 
-                tempentry.SubIndex = Entries[i].SubIndex;
+                header.AddObjectToArray(TempHeader);
 
-                tempentry.NameOffset = pointersize + StringBuffer.Count;
-                StringBuffer.AddStringToBuffer(Entries[i].Name);
+                long pointersize = 24 * Entries.Length;
+                long stringoffset = pointersize;
 
-                tempentry.MaterialOffset = pointersize + StringBuffer.Count - (long)Marshal.OffsetOf(typeof(ExportableModelEntry), "MaterialOffset");
-                StringBuffer.AddStringToBuffer(Entries[i].MaterialName) ;
-        
-                pointersize -= 24;
+                for (int i = 0; i < Entries.Length; i++)
+                {
+                    ExportableModelEntry tempentry = new ExportableModelEntry();
 
-                pointerbuffer.AddObjectToArray(tempentry);
+                    tempentry.SubIndex = Entries[i].SubIndex;
+
+                    tempentry.NameOffset = pointersize + StringBuffer.Count;
+                    StringBuffer.AddStringToBuffer(Entries[i].Name);
+
+                    tempentry.MaterialOffset = pointersize + StringBuffer.Count - (long)Marshal.OffsetOf(typeof(ExportableModelEntry), "MaterialOffset");
+                    StringBuffer.AddStringToBuffer(Entries[i].MaterialName, i != Entries.Length - 1);
+
+                    pointersize -= 24;
+
+                    pointerbuffer.AddObjectToArray(tempentry);
+                }
             }
-
-
 
             return Exporter.BuildFinalBuffer().ToArray();
         }

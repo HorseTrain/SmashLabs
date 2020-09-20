@@ -1,5 +1,6 @@
 ﻿using SmashLabs.IO;
 using SmashLabs.IO.Parsables.Model;
+using SmashLabs.IO.Parsables.Skeleton;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +13,9 @@ namespace SmashLabsTester
     {
         static void Main(string[] args)
         {
-            LDOM modelfile = (LDOM)IParsable.FromFile(@"C:\Users\Raymond\Desktop\SmashLabs\SmashLabs-master\SmashLabsTester\bin\Debug\test\c00\model.numdlb");
+            LEKS modelfile = (LEKS)IParsable.FromFile(@"C:\Users\Raymond\Desktop\SmashLabs\SmashLabs-master\SmashLabsTester\bin\Debug\test\c00\model.nusktb");
 
-            modelfile.ExportData(@"D:\Games\Yuzu\sdmc\UltimateModManager\mods\Exporters\fighter\mario\model\body\c00\model.numdlb");
+            modelfile.ExportData(@"D:\Games\Yuzu\sdmc\UltimateModManager\mods\Exporters\fighter\mario\model\body\c00\model.nusktb");
 
             Console.Read();
         }

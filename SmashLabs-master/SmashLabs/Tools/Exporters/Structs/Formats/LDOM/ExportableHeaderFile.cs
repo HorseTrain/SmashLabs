@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SmashLabs.Tools.Exporters.Structs.Formats.LDOM
 {
-    public struct LDOMExportableHeaderFile
+    public struct ExportableHeaderFile
     {
         public HBSSHeader Header;
         public SmashFileMagic Magic;

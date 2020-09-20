@@ -17,5 +17,9 @@ namespace SmashLabs.IO.Parsables.Skeleton
         public Matrix4 InverseWorldTransform { get; set; }
         public Matrix4 LocalTransform { get; set; }
         public Matrix4 InverseLocalTransform { get; set; }
+        public override string ToString()
+        {
+            return Name + " " + Index + " " + ParentIndex + " " + Type;
+        }
     }
 }

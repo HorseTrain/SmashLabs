@@ -42,7 +42,7 @@ namespace SmashLabs.Tools.Exporters
             }
         }
 
-        public void AddStringToBuffer(string str)
+        public void AddStringToBuffer(string str,bool pad = true)
         {
             int size = 0;
 
@@ -52,12 +52,19 @@ namespace SmashLabs.Tools.Exporters
                 size++;
             }
 
-            int toadd = 4 - (size % 4);
+            if (pad)
+            {
+                int toadd = 4 - (size % 4);
 
-            if (toadd == 0)
-                AddPadding(4);
+                if (toadd == 0)
+                    AddPadding(4);
+                else
+                    AddPadding(toadd);
+            }
             else
-                AddPadding(toadd);
+            {
+                Add(0);
+            }
         }
 
         public static byte* GetDataPointer(byte[] Temp)
