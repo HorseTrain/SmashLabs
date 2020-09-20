@@ -9,9 +9,9 @@ namespace SmashLabs.IO
     public struct HBSSHeader
     {
         public byte Magic0, Magic1, Magic2, Magic3; //Always "HBSS"?
-
         public int Unk0;
-        public int Unk1;
+
+        public long Unk1;
 
         public override string ToString()
         {

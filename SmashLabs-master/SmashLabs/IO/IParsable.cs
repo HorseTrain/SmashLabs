@@ -5,6 +5,7 @@ using SmashLabs.IO.Parsables.Skeleton;
 using SmashLabs.IO.Parsables.Mesh;
 using SmashLabs.IO.Parsables.Material;
 using SmashLabs.IO.Parsables.Animation;
+using System.IO;
 
 namespace SmashLabs.IO
 {
@@ -12,6 +13,7 @@ namespace SmashLabs.IO
     {
         public BufferReader reader;
 
+        public HBSSHeader Header { get; set; }
         public SmashFileMagic Magic { get; private set; }
 
         protected IParsable()
@@ -45,6 +47,10 @@ namespace SmashLabs.IO
 
             Out.reader = reader;
 
+            reader.Seek(0);
+            Out.Header = reader.ReadObject<HBSSHeader>();
+            reader.Seek(0x18);
+
             Out.LoadData();
 
             return Out;
@@ -62,6 +68,21 @@ namespace SmashLabs.IO
         public virtual void LoadData() //Reader always starts at 0x18
         {
 
+        }
+
+        public virtual byte[] GetData()
+        {
+            return null;
+        }
+
+        public void ExportData(string path)
+        {
+            byte[] temp = GetData();
+
+            if (temp != null)
+            {
+                File.WriteAllBytes(path,temp);
+            }
         }
     }
 }

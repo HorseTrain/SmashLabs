@@ -1,0 +1,10 @@
+C:\Users\Raymond\Desktop\SmashLabs\SmashLabs-master\SmashLabsTester\bin\Debug\SmashLabsTester.exe.config
+C:\Users\Raymond\Desktop\SmashLabs\SmashLabs-master\SmashLabsTester\bin\Debug\SmashLabsTester.exe
+C:\Users\Raymond\Desktop\SmashLabs\SmashLabs-master\SmashLabsTester\bin\Debug\SmashLabsTester.pdb
+C:\Users\Raymond\Desktop\SmashLabs\SmashLabs-master\SmashLabsTester\bin\Debug\SmashLabs.dll
+C:\Users\Raymond\Desktop\SmashLabs\SmashLabs-master\SmashLabsTester\bin\Debug\SmashLabs.pdb
+C:\Users\Raymond\Desktop\SmashLabs\SmashLabs-master\SmashLabsTester\obj\Debug\SmashLabsTester.csprojAssemblyReference.cache
+C:\Users\Raymond\Desktop\SmashLabs\SmashLabs-master\SmashLabsTester\obj\Debug\SmashLabsTester.csproj.CoreCompileInputs.cache
+C:\Users\Raymond\Desktop\SmashLabs\SmashLabs-master\SmashLabsTester\obj\Debug\SmashLabsTester.csproj.CopyComplete
+C:\Users\Raymond\Desktop\SmashLabs\SmashLabs-master\SmashLabsTester\obj\Debug\SmashLabsTester.exe
+C:\Users\Raymond\Desktop\SmashLabs\SmashLabs-master\SmashLabsTester\obj\Debug\SmashLabsTester.pdb

@@ -23,5 +23,16 @@ namespace SmashLabs.IO
 
             return Out;
         }
+
+        public SmashFileMagic(string name,short major = 1, short minor = 0)
+        {
+            Magic0 = (byte)name[0];
+            Magic1 = (byte)name[1];
+            Magic2 = (byte)name[2];
+            Magic3 = (byte)name[3];
+
+            MajorVersion = major;
+            MinorVersion = minor;
+        }
     }
 }

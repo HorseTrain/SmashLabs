@@ -107,6 +107,12 @@
     <Compile Include="Tools\BufferReader.cs" />
     <Compile Include="Tools\ErrorHandling.cs" />
     <Compile Include="Tools\Accessors\VertexAccesor.cs" />
+    <Compile Include="Tools\Exporters\ByteBuffer.cs" />
+    <Compile Include="Tools\Exporters\ExportableBuffer.cs" />
+    <Compile Include="Tools\Exporters\StringBufferTools.cs" />
+    <Compile Include="Tools\Exporters\Structs\Formats\LDOM\ExportableArrayPointer.cs" />
+    <Compile Include="Tools\Exporters\Structs\Formats\LDOM\ExportableModelEntry.cs" />
+    <Compile Include="Tools\Exporters\Structs\Formats\LDOM\LDOMExportableHeaderFile.cs" />
     <Compile Include="Tools\Memory.cs" />
   </ItemGroup>
   <ItemGroup />

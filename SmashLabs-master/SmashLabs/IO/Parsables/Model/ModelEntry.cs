@@ -9,7 +9,12 @@ namespace SmashLabs.IO.Parsables.Model
     public class ModelEntry
     {
         public string Name { get; set; }
-        public long Unknown0 { get; set; } //What is this?
+        public long SubIndex { get; set; }
         public string MaterialName { get; set; }
+
+        public override string ToString()
+        {
+            return Name + " " + SubIndex + " " + MaterialName;
+        }
     }
 }

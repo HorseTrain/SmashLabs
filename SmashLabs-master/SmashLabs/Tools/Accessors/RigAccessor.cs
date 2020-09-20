@@ -28,7 +28,10 @@ namespace SmashLabs.Tools.Accessors
 
                 VertexRig[] Out = new VertexRig[Object.MeshData.VertexCount];
 
-                int index = SkeletonDic[Object.ParentBoneName];
+                int index = 0;
+                
+                if (SkeletonDic.ContainsKey(Object.ParentBoneName))
+                    index = SkeletonDic[Object.ParentBoneName];
 
                 for (int i = 0; i < Out.Length;i++)
                 {
