@@ -13,6 +13,20 @@ namespace SmashLabs.Structs
         public Vector4 Row2;
         public Vector4 Row3;
 
+        public static Matrix4 Unit
+        {
+            get
+            {
+                return new Matrix4()
+                {
+                    Row0 = new Vector4(1, 0, 0, 0),
+                    Row1 = new Vector4(0, 1, 0, 0),
+                    Row2 = new Vector4(0, 0, 1, 0),
+                    Row3 = new Vector4(0, 0, 0, 1)
+                };
+            }
+        }
+
         public override string ToString()
         {
             return 

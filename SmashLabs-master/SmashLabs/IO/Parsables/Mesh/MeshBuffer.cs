@@ -11,6 +11,7 @@ namespace SmashLabs.IO.Parsables.Mesh
 {
     public class MeshBuffer
     {
+        public long size { get; set; }
         public long offset { get; set; }
 
         public static MeshBuffer[] ParseMeshBuffers(BufferReader reader)
@@ -35,6 +36,7 @@ namespace SmashLabs.IO.Parsables.Mesh
 
             BufferArrayPointer pointer = reader.ReadArrayPointer();
 
+            Out.size = pointer.ElementCount;
             Out.offset = pointer.AbsoluteOffset;
 
             pointer.End();

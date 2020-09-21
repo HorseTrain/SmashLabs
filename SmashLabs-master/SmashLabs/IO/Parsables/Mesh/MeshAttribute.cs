@@ -48,6 +48,8 @@ namespace SmashLabs.IO.Parsables.Mesh
 
             Out.Names = reader.ReadStringArray();
 
+            //48
+
             return Out;
         }
     }

@@ -41,6 +41,8 @@ namespace SmashLabs.IO.Parsables.Mesh
             Out.MeshData = reader.ReadObject<MeshObjectData>();
             Out.MeshAttributes = MeshAttribute.ParseMeshAttributes(reader);
 
+            //208
+
             return Out;
         }
     }

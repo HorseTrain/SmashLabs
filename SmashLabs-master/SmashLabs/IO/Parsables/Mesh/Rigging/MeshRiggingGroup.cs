@@ -26,6 +26,8 @@ namespace SmashLabs.IO.Parsables.Mesh.Rigging
                 Out[i] = ParseMeshRiggingGroup(reader);
             }
 
+            pointer.End();
+
             return Out;
         }
 

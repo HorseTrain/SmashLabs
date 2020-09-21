@@ -10,6 +10,7 @@ namespace SmashLabs.IO.Parsables.Mesh
 {
     public class PolygonBuffer
     {
+        public long size { get; set; }
         public long offset { get; private set; }
 
         public static PolygonBuffer ParsePolygonBuffer(BufferReader reader)
@@ -18,6 +19,7 @@ namespace SmashLabs.IO.Parsables.Mesh
 
             PolygonBuffer Out = new PolygonBuffer();
 
+            Out.size = pointer.ElementCount;
             Out.offset = pointer.AbsoluteOffset;
 
             pointer.End();

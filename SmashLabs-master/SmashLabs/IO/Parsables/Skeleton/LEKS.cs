@@ -1,6 +1,6 @@
 ﻿using SmashLabs.Structs;
+using SmashLabs.Tools.Exporter;
 using SmashLabs.Tools.Exporters;
-using SmashLabs.Tools.Exporters.Structs.Formats.LEKS;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,66 +58,47 @@ namespace SmashLabs.IO.Parsables.Skeleton
 
         public override unsafe byte[] GetData()
         {
-            ExportableBuffer Exporter = new ExportableBuffer();
+            ExportableBufferCollection Out = new ExportableBufferCollection();
 
-            ByteBuffer HeaderData = Exporter.AddBuffer();
-            ByteBuffer PointerData = Exporter.AddBuffer();
+            ByteBuffer Header = Out.AddBuffer();
 
-            ByteBuffer StringBuffer = Exporter.AddBuffer();
+            ByteBuffer EntryBuffer = Out.AddBuffer();
 
+            ByteBuffer StringBuffer = Out.AddBuffer();
+
+            ByteBuffer WorldTransformBuffer = Out.AddBuffer();
+            ByteBuffer InverseWorldTransformBuffer = Out.AddBuffer();
+
+            ByteBuffer LocalTransformBuffer = Out.AddBuffer();
+            ByteBuffer InverseLocalTransformBuffer = Out.AddBuffer();
+
+            Header.AddObject(this.Header);
+            Header.AddObject(this.Magic);
+
+            Out.AddPointer(Header,EntryBuffer);
+
+            Header.AddObject((long)BoneEntries.Length); Out.AddPointer(Header,WorldTransformBuffer);
+            Header.AddObject((long)BoneEntries.Length); Out.AddPointer(Header, InverseWorldTransformBuffer);
+            Header.AddObject((long)BoneEntries.Length); Out.AddPointer(Header, LocalTransformBuffer);
+            Header.AddObject((long)BoneEntries.Length); Out.AddPointer(Header, InverseLocalTransformBuffer);
+
+            Header.AddObject((long)BoneEntries.Length);
+
+            foreach (BoneEntry entry in BoneEntries)
             {
-                int pointersize = BoneEntries.Length * 16;
+                Out.AddStringWithPointer(entry.Name,EntryBuffer,StringBuffer);
+                EntryBuffer.AddObject(entry.Index);
+                EntryBuffer.AddObject(entry.ParentIndex);
+                EntryBuffer.AddObject(entry.Type);
 
-                foreach (BoneEntry entry in BoneEntries)
-                {
-                    PointerData.AddObjectToArray((long)pointersize + StringBuffer.Count);
-                    StringBuffer.AddStringToBuffer(entry.Name);
+                WorldTransformBuffer.AddObject(entry.WorldTransform);
+                InverseWorldTransformBuffer.AddObject(entry.InverseWorldTransform);
 
-                    PointerData.AddObjectToArray(entry.Index);
-                    PointerData.AddObjectToArray(entry.ParentIndex);
-                    PointerData.AddObjectToArray(entry.Type);
-
-                    pointersize -= 16;
-                }
+                LocalTransformBuffer.AddObject(entry.LocalTransform);
+                InverseLocalTransformBuffer.AddObject(entry.InverseLocalTransform);
             }
 
-            {
-                ByteBuffer WorldTransform = Exporter.AddBuffer();
-                ByteBuffer InverseWorldTransform = Exporter.AddBuffer();
-                ByteBuffer TransformBuffer = Exporter.AddBuffer();
-                ByteBuffer InverseTransformBuffer = Exporter.AddBuffer();
-
-                foreach (BoneEntry entry in BoneEntries)
-                {
-                    WorldTransform.AddObjectToArray(entry.WorldTransform);
-                    InverseWorldTransform.AddObjectToArray(entry.InverseWorldTransform);
-                    TransformBuffer.AddObjectToArray(entry.LocalTransform);
-                    InverseTransformBuffer.AddObjectToArray(entry.InverseLocalTransform);
-                }
-            }
-
-            {
-                HeaderData.AddObjectToArray(Header);
-                HeaderData.AddObjectToArray(Magic);
-
-                HeaderData.AddObjectToArray(80L);
-
-                HeaderData.AddObjectToArray((long)BoneEntries.Length);
-                HeaderData.AddObjectToArray((long)PointerData.Count + StringBuffer.Count + (104 - HeaderData.Count));
-
-                HeaderData.AddObjectToArray((long)BoneEntries.Length);
-                HeaderData.AddObjectToArray((long)PointerData.Count + StringBuffer.Count + (104 - HeaderData.Count) + (1 * (sizeof(Matrix4) * BoneEntries.Length)));
-
-                HeaderData.AddObjectToArray((long)BoneEntries.Length);
-                HeaderData.AddObjectToArray((long)PointerData.Count + StringBuffer.Count + (104 - HeaderData.Count) + (2 * (sizeof(Matrix4) * BoneEntries.Length)));
-
-                HeaderData.AddObjectToArray((long)BoneEntries.Length);
-                HeaderData.AddObjectToArray((long)PointerData.Count + StringBuffer.Count + (104 - HeaderData.Count) + (3 * (sizeof(Matrix4) * BoneEntries.Length)));
-
-                HeaderData.AddObjectToArray((long)BoneEntries.Length);
-            }
-
-            return Exporter.BuildFinalBuffer().ToArray();
+            return Out.FinalBuffer();
         }
     }
 }
