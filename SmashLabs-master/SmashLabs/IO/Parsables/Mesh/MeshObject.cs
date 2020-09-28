@@ -13,7 +13,7 @@ namespace SmashLabs.IO.Parsables.Mesh
         public string Name { get; set; }
         public long SubIndex { get; set; }
         public string ParentBoneName { get; set; }
-        public MeshObjectData MeshData { get; set; }
+        public MeshObjectData MeshData;
         public MeshAttribute[] MeshAttributes { get; set; }
         public static MeshObject[] ReadObjects(BufferReader reader)
         {

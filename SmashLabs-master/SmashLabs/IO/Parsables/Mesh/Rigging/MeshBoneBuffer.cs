@@ -42,6 +42,8 @@ namespace SmashLabs.IO.Parsables.Mesh.Rigging
             Out.offset = pointer.AbsoluteOffset;
             Out.Size = pointer.ElementCount;
 
+            Console.WriteLine(Out.name);
+
             pointer.End();
 
             return Out;

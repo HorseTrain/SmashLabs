@@ -10,9 +10,9 @@ namespace SmashLabs.IO.Parsables.Mesh
 {
     public unsafe class HSEM : IParsable
     {
-        public string Name { get; set; }
+        public string Name { get; set; } = "";
         MeshMetaData MeshData { get; set; }
-        public int[] BufferSizes { get; set; }
+        public int[] BufferSizes { get; set; } = new int[0];
         public long PolygonIndexSize { get; set; }
         public MeshBuffer[] VertexBuffers { get; set; }
         public MeshObject[] Objects { get; set; }

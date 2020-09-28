@@ -53,6 +53,21 @@ namespace SmashLabs.Tools.Exporters
             return Buffers[Buffers.Count - 1];
         }
 
+        public List<byte> BuildBuffer()
+        {
+            List<byte> Out = new List<byte>();
+
+            foreach (List<byte> buffer in Buffers)
+            {
+                foreach (byte b in buffer)
+                {
+                    Out.Add(b);
+                }
+            }
+
+            return Out;
+        }
+
         public List<byte> BuildBuffer(out List<int> offsets)
         {
             List<byte> Out = new List<byte>();
@@ -120,6 +135,9 @@ namespace SmashLabs.Tools.Exporters
 
         public void AddStringWithPointer(string str, ByteBuffer pointerlocation, ByteBuffer datalocation,bool pad = true)
         {
+            if (pointerlocation == datalocation)
+                throw new Exception("Pointer location can not be datta location!!");
+
             AddPointer(pointerlocation, datalocation);
             datalocation.AddString(str, pad);
         }

@@ -105,6 +105,9 @@
     <Compile Include="Tools\Accessors\Animation\SsbhAnimCompressedHeader.cs" />
     <Compile Include="Tools\Accessors\RigAccessor.cs" />
     <Compile Include="Tools\BufferReader.cs" />
+    <Compile Include="Tools\Encoders\MeshCollectionBuilder.cs" />
+    <Compile Include="Tools\Encoders\Mesh\ExportableMeshAttribute.cs" />
+    <Compile Include="Tools\Encoders\Mesh\ExportableMeshObject.cs" />
     <Compile Include="Tools\ErrorHandling.cs" />
     <Compile Include="Tools\Accessors\VertexAccesor.cs" />
     <Compile Include="Tools\Exporter\ArrayPointer.cs" />

@@ -91,5 +91,13 @@ namespace SmashLabs.IO.Parsables.Material
                     break;
             }
         }
+
+        public static int GetIntFromBool(bool data)
+        {
+            if (data)
+                return 1;
+            else
+                return 0;
+        }
     }
 }

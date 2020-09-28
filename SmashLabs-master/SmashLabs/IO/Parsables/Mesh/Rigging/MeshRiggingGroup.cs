@@ -38,7 +38,6 @@ namespace SmashLabs.IO.Parsables.Mesh.Rigging
             Out.Name = reader.ReadStringOffset();
             Out.SubIndex = reader.ReadLong();
             Out.Flags = reader.ReadLong();
-
             Out.Buffers = MeshBoneBuffer.ReadMeshBoneBuffers(reader);
 
             return Out;
